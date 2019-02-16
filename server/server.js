@@ -14,6 +14,18 @@ io.on('connection',(socket)=>{
     console.log('new user connected');
     socket.on('disconnect',()=>{
         console.log('user disconnected')
+    });
+    socket.on('createEmail',(newEmail)=>{
+        console.log("Create email",newEmail);
+    });
+    socket.emit('newMessage',{
+        from:"screen.r@gmail.com",
+        text:"vbskjbsdbkjs",
+        createdAt:new Date().getTime(),
+    });
+    socket.on('createMessage',(message)=>{
+        console.log(message);
+        
     })
     
 })

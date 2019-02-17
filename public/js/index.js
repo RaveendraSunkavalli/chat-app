@@ -1,5 +1,6 @@
 
 
+
 var socket=io();
 socket.on('connect',function(){
     console.log("connected to server");
@@ -20,9 +21,10 @@ socket.on('newEmail',function (email) {
 
 
 socket.on('newMessage',function(message) {
+    var formattedTime=moment(message.createdAt).format('h:mm a');
     console.log("New Message:",message);
     var li=jQuery("<li></li>");
-    li.text(`${message.from}:${message.text}`);
+    li.text(`${formattedTime}:${message.from}:${message.text}`);
     $('#message').append(li);
     
 })
@@ -35,9 +37,10 @@ socket.on('newMessage',function(message) {
 // })
 
 socket.on('newLocationMessage',function (msg) {
+    var formattedTime=moment(msg.createdAt).format('h:mm a')
     var li=jQuery('<li></li>');
     var a=jQuery('<a target="_blank">My Current position</a>')
-    li.text(`${msg.from}: `);
+    li.text(`${formattedTime}:${msg.from}: `);
     a.attr('href',msg.url);
     li.append(a);
     $('#message').append(li);

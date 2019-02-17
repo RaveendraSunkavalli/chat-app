@@ -16,21 +16,16 @@ const staticPath=path.join(__dirname,'../public')
 
 app.use(express.static(staticPath));
 
+const {getMessage}=require('./util/message');
+
+
 io.on('connection',(socket)=>{
     console.log('new user connected');
     socket.on('disconnect',()=>{
         console.log('user disconnected')
     });
-    socket.emit('newMessage',{
-        from:"admin",
-        text:"Welcome to chat",
-        createdAt:new Date().getTime(),
-    });
-    socket.broadcast.emit("newMessage",{
-        from:"user",
-        text:"new user joined",
-        createdAt:new Date().getTime(),
-    });
+    socket.emit('newMessage',getMessage('admin','Welcome to chat'))
+    socket.broadcast.emit("newMessage",getMessage('admin','new User joined'));
     
     // socket.on('createEmail',(newEmail)=>{
     //     console.log("Create email",newEmail);

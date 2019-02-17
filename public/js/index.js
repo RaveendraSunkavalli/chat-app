@@ -6,7 +6,7 @@ socket.on('connect',function(){
     socket.emit('createEmail',{
         fr:"nkjbjhb"
     });
-     
+    
 });
 
 socket.on('disconnect',function(){

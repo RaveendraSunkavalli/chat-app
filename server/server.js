@@ -21,6 +21,17 @@ io.on('connection',(socket)=>{
     socket.on('disconnect',()=>{
         console.log('user disconnected')
     });
+    socket.emit('newMessage',{
+        from:"admin",
+        text:"Welcome to chat",
+        createdAt:new Date().getTime(),
+    });
+    socket.broadcast.emit("newMessage",{
+        from:"user",
+        text:"new user joined",
+        createdAt:new Date().getTime(),
+    });
+    
     // socket.on('createEmail',(newEmail)=>{
     //     console.log("Create email",newEmail);
     // });
@@ -29,14 +40,19 @@ io.on('connection',(socket)=>{
     //     text:"vbskjbsdbkjs",
     //     createdAt:new Date().getTime(),
     // });
-    socket.on('createMessage',(message)=>{
-        console.log(message);
-        io.emit('newMessage',{
-            from:message.from,
-            text:message.text,
-            createdAt:new Date().getTime(),
-        });
-    });
+    // socket.broadcast.emit('newMessage',{
+    //         from:"screen.r@gmail.com",
+    //         text:"vbskjbsdbkjs",
+    //         createdAt:new Date().getTime(),
+    // })
+    // socket.on('createMessage',(message)=>{
+    //     console.log(message);
+    //     io.emit('newMessage',{
+    //         from:message.from,
+    //         text:message.text,
+    //         createdAt:new Date().getTime(),
+    //     });
+    // });
     
 })
 

@@ -22,10 +22,15 @@ socket.on('newEmail',function (email) {
 
 socket.on('newMessage',function(message) {
     var formattedTime=moment(message.createdAt).format('h:mm a');
-    console.log("New Message:",message);
-    var li=jQuery("<li></li>");
-    li.text(`${formattedTime}:${message.from}:${message.text}`);
-    $('#message').append(li);
+    var template=$('#message-template').html();
+    var html=Mustache.render(template, {
+        text:message.text,
+        from:message.from,
+        createdAt:formattedTime
+        
+    })
+    
+    $('#message').append(html);
     
 })
 
@@ -36,14 +41,23 @@ socket.on('newMessage',function(message) {
 //     console.log('got it ',msg);
 // })
 
-socket.on('newLocationMessage',function (msg) {
-    var formattedTime=moment(msg.createdAt).format('h:mm a')
-    var li=jQuery('<li></li>');
-    var a=jQuery('<a target="_blank">My Current position</a>')
-    li.text(`${formattedTime}:${msg.from}: `);
-    a.attr('href',msg.url);
-    li.append(a);
-    $('#message').append(li);
+socket.on('newLocationMessage',function (message) {
+    var formattedTime=moment(message.createdAt).format('h:mm a')
+    var template=$('#location-message-template').html();
+    var html=Mustache.render(template, {
+        url:message.url,
+        from:message.from,
+        createdAt:formattedTime
+        
+    })
+    
+    // $('#message').append(html);
+    // var li=jQuery('<li></li>');
+    // var a=jQuery('<a target="_blank">My Current position</a>')
+    // li.text(`${formattedTime}:${msg.from}: `);
+    // a.attr('href',msg.url);
+    // li.append(a);
+     $('#message').append(html);
 
 })
 
@@ -67,7 +81,7 @@ locationButton.on('click',function () {
     
     navigator.geolocation.getCurrentPosition(function (position) {
         locationButton.removeAttr('disabled').text("send location")
-        console.log(position);
+        //console.log(position);
         socket.emit('createLocationmessage',{
             latitude:position.coords.latitude,
             longitude:position.coords.longitude

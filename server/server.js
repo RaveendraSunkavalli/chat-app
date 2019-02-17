@@ -40,14 +40,11 @@ io.on('connection',(socket)=>{
     //         text:"vbskjbsdbkjs",
     //         createdAt:new Date().getTime(),
     // })
-    // socket.on('createMessage',(message)=>{
-    //     console.log(message);
-    //     io.emit('newMessage',{
-    //         from:message.from,
-    //         text:message.text,
-    //         createdAt:new Date().getTime(),
-    //     });
-    // });
+    socket.on('createMessage',(message,callback)=>{
+        console.log(message);
+        io.emit('newMessage',getMessage(message.from,message.text));
+        callback('This is from string');
+    });
     
 })
 

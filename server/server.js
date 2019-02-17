@@ -16,14 +16,12 @@ const staticPath=path.join(__dirname,'../public')
 
 app.use(express.static(staticPath));
 
-const {getMessage}=require('./util/message');
+const {getMessage,getLocationMessage}=require('./util/message');
 
 
 io.on('connection',(socket)=>{
     console.log('new user connected');
-    socket.on('disconnect',()=>{
-        console.log('user disconnected')
-    });
+    
     socket.emit('newMessage',getMessage('admin','Welcome to chat'))
     socket.broadcast.emit("newMessage",getMessage('admin','new User joined'));
     
@@ -45,7 +43,13 @@ io.on('connection',(socket)=>{
         io.emit('newMessage',getMessage(message.from,message.text));
         callback('This is from string');
     });
-    
+    socket.on('createLocationmessage',(coord)=>{
+         io.emit('newLocationMessage',getLocationMessage('admin',coord.latitude,coord.longitude
+         ))
+    })
+    socket.on('disconnect',()=>{
+        console.log('user disconnected')
+    });
 })
 
 

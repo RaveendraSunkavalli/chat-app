@@ -1,15 +1,25 @@
 <!DOCTYPE html>
 <head>
-
+    <link rel='stylesheet' href='/css/style.css'></link>
 </head>
-<body>
-    <p>Hello to node JS</p>
-    <ol id="message"></ol>
-    <form id='message-form'>
-        <input type="text" name='message' placeholder="Message"/>
-        <button type="submit">Send</button>
-    </form>
-    <button id="sendLocation">Send Location</button>
+<body class="chat">
+    <div class="chat__sidebar">
+        <h3>people</h3>
+        <div id='users'></div>
+    </div>
+    <div class="chat__main">
+        <p>Welcome to Chat app</p>
+        <ol id="message"class="chat__messages" ></ol>
+    
+    <div class="chat__footer">
+        <form id='message-form'>
+            <input type="text" name='message' placeholder="Message" autocomplete='off' autofocus/>
+            <button type="submit">Send</button>
+        </form>
+        <button id="sendLocation">Send location</button>
+    </div>
+</div>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/index.js"></script>

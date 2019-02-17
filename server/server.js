@@ -41,10 +41,10 @@ io.on('connection',(socket)=>{
     socket.on('createMessage',(message,callback)=>{
         console.log(message);
         io.emit('newMessage',getMessage(message.from,message.text));
-        callback('This is from string');
+        callback();
     });
     socket.on('createLocationmessage',(coord)=>{
-         io.emit('newLocationMessage',getLocationMessage('admin',coord.latitude,coord.longitude
+         io.emit('newLocationMessage', getLocationMessage('admin',coord.latitude,coord.longitude
          ))
     })
     socket.on('disconnect',()=>{

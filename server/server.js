@@ -1,20 +1,15 @@
-const path =require('path');
-const http=require('http');
+const path = require('path');
+const http = require('http');
+const express = require('express');
+const socketIO = require('socket.io');
 
-const express=require('express');
-const app=express();
-var server=http.createServer(app);
-const socketIO=require('socket.io');
+const publicPath = path.join(__dirname, '../public');
+const port = process.env.PORT || 3000;
+var app = express();
+var server = http.createServer(app);
+var io = socketIO(server);
 
-
-const port= process.env.PORT||3000
-
-
-var io=socketIO(server);
-
-const staticPath=path.join(__dirname,'../public')
-
-app.use(express.static(staticPath));
+app.use(express.static(publicPath));
 
 io.on('connection',(socket)=>{
     console.log('new user connected');

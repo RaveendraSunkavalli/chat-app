@@ -14,6 +14,19 @@ socket.on('disconnect',function(){
     console.log('Disconnected from server');
 });
 
+function scrolltoBottom() {
+    var message=$('#message');
+    var newMessage=message.children('li:last-child')
+    var clientHeigth=message.prop('clientHeigth');
+    var scrollTop= message.prop('scrollTop');
+    var scrollHeight= message.prop('scrollHeight');
+    var newMessageHeight=newMessage.innerHeight();
+    var lastMessageHeight=newMessage.prev().innerHeight();
+    
+    if(clientHeigth+scrollTop+newMessageHeight+lastMessageHeight>=scrollHeight);
+        message.scrollTop(scrollHeight);
+        
+}
 
 socket.on('newEmail',function (email) {
     console.log("new email",email);
@@ -31,6 +44,7 @@ socket.on('newMessage',function(message) {
     })
     
     $('#message').append(html);
+    scrolltoBottom();
     
 })
 
@@ -58,6 +72,7 @@ socket.on('newLocationMessage',function (message) {
     // a.attr('href',msg.url);
     // li.append(a);
      $('#message').append(html);
+     scrolltoBottom();
 
 })
 
